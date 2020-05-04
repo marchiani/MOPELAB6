@@ -1,6 +1,7 @@
 import copy
 import random
 from math import sqrt
+import time
 
 import numpy as np
 import scipy.stats
@@ -296,6 +297,10 @@ for num_of_coef in num_of_coef_list:
                 S2_temp += (y_list[i][j] - my_list[i]) ** 2
             S2.append(S2_temp)
 
+
+        """KOHREN"""
+        KOHREN__start_time = time.time()
+
         print("S2: ", S2)
         Gp = max(S2)/sum(S2)
 
@@ -345,7 +350,11 @@ for num_of_coef in num_of_coef_list:
         [1, 0, 0, l],
         [1, 0, 0, 0]
     ]
+    KOHREN__stop_time = time.time()
+    KOHREN__total__time = KOHREN__stop_time - KOHREN__start_time;
 
+    """STUDENT"""
+    STUDENT__start_time = time.time()
 
     def get_beta(i):
         summa = 0
@@ -393,8 +402,14 @@ for num_of_coef in num_of_coef_list:
                          b_coefs[10]*x_matrix[i][2]*x_matrix[i][2])
 
         print(f"y{i+1}_hat = {y_hat[i]:.2f}")
+    STUDENT__stop_time = time.time()
 
+    STUDENT__total__time = STUDENT__stop_time - STUDENT__start_time;
+    print("STUDENT time = {0}".format(STUDENT__total__time))
 
+    """FISHER"""
+
+    FISHER__start_time = time.time()
     d = 2
     f4 = N - d
     S2_ad = 0
@@ -414,3 +429,10 @@ for num_of_coef in num_of_coef_list:
     else:
         print("Рівняння регресії адекватно оригіналу при рівні значимості 0,05")
         break
+    FISHER__stop_time = time.time()
+    FISHER__total__time = FISHER__stop_time - FISHER__start_time;
+
+    print("KOHREN time = {0}".format(KOHREN__total__time))
+    print("STUDENT time = {0}".format(STUDENT__total__time))
+    print("FISHER time = {0}".format(FISHER__total__time))
+
